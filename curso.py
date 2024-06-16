@@ -46,7 +46,7 @@ def finalizar() -> int:
 def get_curso(id: int) -> tuple[int, dict]:
     for curso in lista_cursos:
         if(curso.get("id") == id):
-            if curso in lista_cursos:
+            if curso in cursos_deletados:
                 return CURSO_NAO_ATIVO, curso
             else:
                 return OPERACAO_REALIZADA_COM_SUCESSO, curso
