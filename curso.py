@@ -71,9 +71,6 @@ def add_curso(nome: str, carga_horaria: int, prereqs: int, duracao_semanas: int)
         "duracao_semanas": duracao_semanas
     }
 
-    if curso in lista_cursos:
-        return CURSO_JA_EXISTE, -1
-
     lista_cursos.append(curso)
     return OPERACAO_REALIZADA_COM_SUCESSO, id
     
