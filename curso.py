@@ -1,4 +1,4 @@
-__all__ = [ 'inicializar', 'finalizar', 'get_aluno', 'add_aluno', 'set_horario' ]
+__all__ = [ 'inicializar', 'finalizar', 'get_curso', 'get_cursos', 'add_curso', 'del_curso']
 
 import json
 
