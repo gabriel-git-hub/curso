@@ -1,6 +1,6 @@
 __all__ = [ 'inicializar', 'finalizar', 'get_curso', 'get_cursos', 'add_curso', 'del_curso']
 
-import json
+import json, atexit
 
 # Variaveis globais
 lista_cursos = list()
@@ -94,6 +94,13 @@ def exibe_cursos():
         print(curso)
     print("\n")
 
-# testes
+# main
+erro = inicializar()
+if erro != 0:
+    print(erro)
+
+
+# Salvar turmas ao final do programa
+atexit.register(finalizar)
 
 
