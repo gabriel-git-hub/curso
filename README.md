@@ -64,11 +64,11 @@ Esta função recebe um valor de inteiro em seu parâmetro e busca na base de da
 
 ## get_cursos
 
-Esta função retorna uma tupla com uma mensagem de erro seguida de uma lista de dicionários com todas as informações de todos os cursos no banco de dados do módulo.
+Esta função retorna uma tupla com uma mensagem de erro seguida de uma lista de dicionários com todas as informações de todos os cursos ativos no banco de dados do módulo.
 
 ### Requisitos
 
-- Retorna uma tupla com a mensagem OPERACAO_REALIZADA_COM_SUCESSO e uma lista de dicionários com todas as informações de todos os cursos armazenadas na base de dados
+- Retorna uma tupla com a mensagem OPERACAO_REALIZADA_COM_SUCESSO e uma lista de dicionários com todas as informações de todos os cursos registrados na base de dados como cursos ativos
 
 ## add_curso
 
