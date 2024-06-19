@@ -22,21 +22,28 @@ CURSO_NAO_ATIVO = 39
 
 # Funções para leitura de Json
 def inicializar() -> int:
-    global lista_cursos
+    global lista_cursos, cursos_deletados
 
     try:
         with open(PATH, 'r') as arquivo:
             try:
-                lista_cursos = json.load(arquivo)
+                dados = json.load(arquivo)
             except json.JSONDecodeError: return ARQUIVO_EM_FORMATO_INVALIDO
     except FileNotFoundError: return ARQUIVO_NAO_ENCONTRADO
+
+    lista_cursos = dados["lista_cursos"]
+    cursos_deletados = dados["cursos_deletados"]
 
     return OPERACAO_REALIZADA_COM_SUCESSO
 
 def finalizar() -> int:
+    global lista_cursos, cursos_deletados
+
+    dados = {"lista_cursos": lista_cursos, "cursos_deletados": cursos_deletados}
+
     try:
         with open(PATH, 'w') as arquivo:
-            json.dump(obj = lista_cursos, fp = arquivo, indent = 4)
+            json.dump(obj = dados, fp = arquivo, indent = 4)
     except OSError: return ERRO_NA_ESCRITA_DO_ARQUIVO
 
     return OPERACAO_REALIZADA_COM_SUCESSO
@@ -60,7 +67,7 @@ def get_cursos() -> tuple[int, list[dict]]:
             cursos_ativos.append(curso)
     return OPERACAO_REALIZADA_COM_SUCESSO, cursos_ativos
 
-def add_curso(nome: str, carga_horaria: int, prereqs: int, duracao_semanas: int) -> tuple[int, int]:
+def add_curso(nome: str, carga_horaria: int, prereqs: list[int], duracao_semanas: int) -> tuple[int, int]:
     global lista_cursos
 
     curso = {
@@ -70,6 +77,10 @@ def add_curso(nome: str, carga_horaria: int, prereqs: int, duracao_semanas: int)
         "prereqs": prereqs,
         "duracao_semanas": duracao_semanas
     }
+
+    for curso in lista_cursos:
+        if curso["nome"] == nome:
+            return 38, None
 
     lista_cursos.append(curso)
     return OPERACAO_REALIZADA_COM_SUCESSO, id
@@ -82,6 +93,7 @@ def del_curso(id: int) -> tuple[int, int]:
     
     if sinal == OPERACAO_REALIZADA_COM_SUCESSO:
         cursos_deletados.append(curso)
+
     return sinal, id    
     
 
@@ -90,9 +102,12 @@ def exibe_curso(id):
     print(get_curso(id))   
 
 def exibe_cursos():
-    for curso in lista_cursos:
+    erro, lista = get_cursos()
+    for curso in lista:
         print(curso)
-    print("\n")
+        print("\n")
+    return erro
+
 
 # main
 erro = inicializar()
@@ -102,5 +117,6 @@ if erro != 0:
 
 # Salvar turmas ao final do programa
 atexit.register(finalizar)
+
 
 
